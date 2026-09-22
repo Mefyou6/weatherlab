@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: "%s · WeatherLab",
   },
   description:
-    "WeatherLab – Projektwebsite für das Fach Projektmanagement: Projektvorstellung, Team, Fotos, Dokumente und Arbeitszeitdokumentation.",
+    "WeatherLab – Projektwebsite für das Fach Projekt Praktikum: Projektvorstellung, Team, Fotos, Dokumente und Arbeitszeitdokumentation.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

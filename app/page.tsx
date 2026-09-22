@@ -141,7 +141,7 @@ export default function Home() {
           <Karte
             href="/arbeitszeit"
             titel="Arbeitszeitdokumentation"
-            text="Unsere eigene App zur Erfassung der Arbeitsstunden – pro Person und Tätigkeit."
+            text="Unsere Arbeitsstunden erfassen wir in Projektzeit Pro – direkt hier nutzbar."
           />
         </div>
       </section>

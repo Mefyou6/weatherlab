@@ -40,3 +40,14 @@ export const projekt = {
 };
 
 export type PhasenStatus = (typeof projekt.phasen)[number]["status"];
+
+/**
+ * Externe Arbeitszeitdokumentation ("Projektzeit Pro").
+ * Wird auf der Seite /arbeitszeit eingebettet und verlinkt.
+ */
+export const arbeitszeitApp = {
+  name: "Projektzeit Pro",
+  url: "https://projektzeit-pro.vercel.app/",
+  beschreibung:
+    "Unsere Arbeitszeiten erfassen wir in Projektzeit Pro. Die Einträge werden zentral gespeichert und sind auf allen Geräten sofort aktuell – ein Login ist dafür nötig.",
+};
