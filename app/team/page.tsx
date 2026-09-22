@@ -28,29 +28,28 @@ export default function TeamPage() {
           {team.map((m) => (
             <article
               key={m.name}
-              className="flex flex-col rounded-xl border border-line bg-surface p-6 transition-shadow hover:shadow-md"
+              className="flex flex-col items-center rounded-xl border border-line bg-surface p-8 text-center transition-shadow hover:shadow-md"
             >
-              <div className="flex items-center gap-4">
-                {m.foto ? (
-                  <Image
-                    src={m.foto}
-                    alt={m.name}
-                    width={64}
-                    height={64}
-                    className="h-16 w-16 rounded-full object-cover"
-                  />
-                ) : (
-                  <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-ink text-lg font-semibold text-white">
-                    {initialen(m.name)}
-                  </span>
-                )}
-                <div>
-                  <h2 className="font-semibold text-ink">{m.name}</h2>
-                  <p className="mt-0.5 inline-block rounded-full bg-brand-soft px-2.5 py-0.5 text-xs font-medium text-brand">
-                    {m.rolle}
-                  </p>
-                </div>
-              </div>
+              {m.foto ? (
+                <Image
+                  src={m.foto}
+                  alt={`Foto von ${m.name}`}
+                  width={288}
+                  height={288}
+                  sizes="144px"
+                  style={{ objectPosition: m.bildfokus ?? "50% 50%" }}
+                  className="h-36 w-36 rounded-full object-cover shadow-sm ring-4 ring-brand-soft"
+                />
+              ) : (
+                <span className="flex h-36 w-36 items-center justify-center rounded-full bg-ink text-3xl font-semibold text-white ring-4 ring-brand-soft">
+                  {initialen(m.name)}
+                </span>
+              )}
+
+              <h2 className="mt-5 text-lg font-semibold text-ink">{m.name}</h2>
+              <p className="mt-1.5 inline-block rounded-full bg-brand-soft px-3 py-1 text-xs font-medium text-brand">
+                {m.rolle}
+              </p>
               <p className="mt-4 text-sm leading-relaxed text-ink-soft">{m.beschreibung}</p>
             </article>
           ))}
