@@ -25,6 +25,7 @@ export default function Footer() {
           <Link href="/team" className="text-white/70 hover:text-white">Team</Link>
           <Link href="/fotos" className="text-white/70 hover:text-white">Fotos</Link>
           <Link href="/dokumente" className="text-white/70 hover:text-white">Dokumente</Link>
+          <Link href="/praesentation" className="text-white/70 hover:text-white">Präsentation</Link>
           <Link href="/arbeitszeit" className="text-white/70 hover:text-white">Arbeitszeit</Link>
         </nav>
       </div>
