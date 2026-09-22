@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WeatherLab – Projektwebsite
 
-## Getting Started
+Projektwebsite für das Fach Projektmanagement. Gebaut mit Next.js + Tailwind CSS, gehostet auf Vercel.
 
-First, run the development server:
+## Seiten
+
+| Seite            | Inhalt                                             | Wo bearbeiten?              |
+| ---------------- | -------------------------------------------------- | --------------------------- |
+| `/`              | Projektvorstellung, Ziele, Projektphasen           | `content/site.ts`           |
+| `/team`          | Teammitglieder mit Rollen + Organigramm            | `content/team.ts`           |
+| `/fotos`         | Fotogalerie                                        | Bilder in `public/fotos/`   |
+| `/dokumente`     | Dokumente ansehen / downloaden                     | Dateien in `public/dokumente/` |
+| `/arbeitszeit`   | Arbeitszeitdokumentation (eigene App)              | `data/arbeitszeiten.json`   |
+
+## Inhalte pflegen
+
+- **Fotos:** JPG/PNG/WebP einfach in `public/fotos/` legen. Der Dateiname wird als Bildtitel angezeigt (`Teammeeting_1.jpg` → „Teammeeting 1“).
+- **Dokumente:** PDFs (oder DOCX, XLSX, …) in `public/dokumente/` legen, z. B. `Lastenheft.pdf`, `Pflichtenheft.pdf`.
+- **Teamfotos:** Bild in `public/team/` legen und in `content/team.ts` bei der Person `foto: "/team/name.jpg"` eintragen.
+- **Arbeitszeiten:** Auf der Seite `/arbeitszeit` Einträge erfassen → „JSON exportieren“ → die Datei als `data/arbeitszeiten.json` ins Projekt kopieren → pushen. Alternativ die JSON-Datei direkt bearbeiten.
+
+## Lokal starten
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Dann http://localhost:3000 öffnen.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Veröffentlichen (Vercel)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Jede Änderung muss auf GitHub gepusht werden – Vercel baut die Seite dann automatisch neu:
 
-## Learn More
+```bash
+git add .
+git commit -m "Beschreibung der Änderung"
+git push
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Nach 1–2 Minuten ist die neue Version live.
