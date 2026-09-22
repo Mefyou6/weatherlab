@@ -49,7 +49,7 @@ export default function ArbeitszeitPage() {
         </div>
 
         {/* Eingebettete App */}
-        <div className="mt-6 overflow-hidden rounded-xl border border-line bg-ink shadow-sm">
+        <div className="mt-6 overflow-hidden rounded-xl border border-line bg-invert shadow-sm">
           <iframe
             src={arbeitszeitApp.url}
             title={`${arbeitszeitApp.name} – Arbeitszeitdokumentation`}

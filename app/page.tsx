@@ -1,13 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { projekt, type PhasenStatus } from "@/content/site";
+import { projekt } from "@/content/site";
 import { team } from "@/content/team";
-
-const statusStyle: Record<PhasenStatus, { label: string; dot: string; text: string }> = {
-  erledigt: { label: "Erledigt", dot: "bg-brand", text: "text-ink" },
-  laufend: { label: "In Arbeit", dot: "bg-brand animate-pulse", text: "text-ink" },
-  offen: { label: "Offen", dot: "bg-line", text: "text-ink-muted" },
-};
+import Zeitplan from "@/components/Zeitplan";
 
 export default function Home() {
   return (
@@ -18,7 +13,8 @@ export default function Home() {
           aria-hidden
           className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-brand-soft blur-3xl"
         />
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-20 sm:px-6 md:grid-cols-2 md:items-center md:py-28">
+        {/* relative: sonst zeichnet der absolut positionierte Schleier oben über den Text */}
+        <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-20 sm:px-6 md:grid-cols-2 md:items-center md:py-28">
           <div>
             <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand">
               {projekt.schule} · {projekt.fach}
@@ -54,7 +50,15 @@ export default function Home() {
                 width={664}
                 height={114}
                 priority
-                className="h-auto w-64 sm:w-80"
+                className="h-auto w-64 sm:w-80 dark:hidden"
+              />
+              <Image
+                src="/logo-dunkel.png"
+                alt=""
+                aria-hidden="true"
+                width={664}
+                height={114}
+                className="hidden h-auto w-64 sm:w-80 dark:block"
               />
             </div>
           </div>
@@ -98,35 +102,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Phasen */}
+      {/* Zeitplan */}
       <section className="border-y border-line bg-surface-alt">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
           <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            Projektverlauf
+            Zeitplan
           </h2>
           <p className="mt-2 max-w-2xl text-ink-soft">
             Wo wir gerade stehen – von der Idee bis zur Präsentation.
           </p>
-          <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {projekt.phasen.map((p, i) => {
-              const s = statusStyle[p.status];
-              return (
-                <li
-                  key={p.name}
-                  className="flex items-center gap-4 rounded-xl border border-line bg-surface px-5 py-4"
-                >
-                  <span className="font-mono text-sm text-ink-muted">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className={`flex-1 font-medium ${s.text}`}>{p.name}</span>
-                  <span className="flex items-center gap-2 text-xs text-ink-muted">
-                    <span className={`h-2 w-2 rounded-full ${s.dot}`} />
-                    {s.label}
-                  </span>
-                </li>
-              );
-            })}
-          </ol>
+          <div className="mt-10 rounded-xl border border-line bg-surface p-5 sm:p-8">
+            <Zeitplan />
+          </div>
         </div>
       </section>
 

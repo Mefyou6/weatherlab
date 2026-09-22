@@ -41,7 +41,7 @@ export default function TeamPage() {
                   className="h-36 w-36 rounded-full object-cover shadow-sm ring-4 ring-brand-soft"
                 />
               ) : (
-                <span className="flex h-36 w-36 items-center justify-center rounded-full bg-ink text-3xl font-semibold text-white ring-4 ring-brand-soft">
+                <span className="flex h-36 w-36 items-center justify-center rounded-full bg-invert text-3xl font-semibold text-white ring-4 ring-brand-soft">
                   {initialen(m.name)}
                 </span>
               )}

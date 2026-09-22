@@ -28,16 +28,24 @@ export const projekt = {
     },
   ],
 
-  // Phasen / Meilensteine des Projekts
+  /**
+   * Phasen des Projekts – Grundlage für die Liste und das Gantt-Diagramm.
+   *
+   * ACHTUNG: Die Datumsangaben sind PLATZHALTER und müssen noch auf euren
+   * echten Zeitplan angepasst werden. Format: "JJJJ-MM-TT".
+   * status: "erledigt" | "laufend" | "offen"
+   */
   phasen: [
-    { name: "Projektstart & Idee", status: "erledigt" },
-    { name: "Lastenheft", status: "laufend" },
-    { name: "Pflichtenheft", status: "laufend" },
-    { name: "Umsetzung", status: "offen" },
-    { name: "Test & Abnahme", status: "offen" },
-    { name: "Präsentation", status: "offen" },
+    { name: "Projektstart & Idee", status: "erledigt", start: "2026-09-08", ende: "2026-09-19" },
+    { name: "Lastenheft", status: "laufend", start: "2026-09-15", ende: "2026-10-10" },
+    { name: "Pflichtenheft", status: "laufend", start: "2026-09-29", ende: "2026-10-31" },
+    { name: "Umsetzung", status: "offen", start: "2026-11-02", ende: "2027-01-30" },
+    { name: "Test & Abnahme", status: "offen", start: "2027-02-01", ende: "2027-02-27" },
+    { name: "Präsentation", status: "offen", start: "2027-03-02", ende: "2027-03-13" },
   ] as const,
 };
+
+export type Phase = (typeof projekt.phasen)[number];
 
 export type PhasenStatus = (typeof projekt.phasen)[number]["status"];
 

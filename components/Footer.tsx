@@ -4,7 +4,7 @@ import { projekt } from "@/content/site";
 
 export default function Footer() {
   return (
-    <footer className="mt-24 border-t border-line bg-ink text-white">
+    <footer className="mt-24 border-t border-line bg-invert text-white">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 md:flex-row md:items-start md:justify-between">
         <div className="max-w-sm">
           <Image
