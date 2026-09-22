@@ -7,10 +7,10 @@ export const projekt = {
   name: "WeatherLab",
   claim: "Wetter messen. Daten verstehen. Gemeinsam umsetzen.",
   kurzbeschreibung:
-    "WeatherLab ist unser Schulprojekt im Fach Projektmanagement. Wir planen, entwickeln und dokumentieren ein Projekt rund um das Thema Wetterdaten – von der Idee über das Lastenheft bis zur fertigen Umsetzung.",
-  schule: "Berufsschule · 4. Klasse",
-  fach: "Projektmanagement",
-  schuljahr: "2026/27",
+    "WeatherLab ist unser Schulprojekt im Fach Projekt Praktikum. Wir planen, entwickeln und dokumentieren ein Projekt rund um das Thema Wetterdaten – von der Idee über das Lastenheft bis zur fertigen Umsetzung.",
+  schule: "Berufsschule · 4bITS",
+  fach: "Projekt Praktikum",
+  schuljahr: "2026",
 
   // Was ist das Ziel des Projekts?
   ziele: [
@@ -31,7 +31,7 @@ export const projekt = {
   // Phasen / Meilensteine des Projekts
   phasen: [
     { name: "Projektstart & Idee", status: "erledigt" },
-    { name: "Lastenheft", status: "erledigt" },
+    { name: "Lastenheft", status: "laufend" },
     { name: "Pflichtenheft", status: "laufend" },
     { name: "Umsetzung", status: "offen" },
     { name: "Test & Abnahme", status: "offen" },
