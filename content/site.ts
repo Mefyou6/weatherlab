@@ -36,12 +36,12 @@ export const projekt = {
    * status: "erledigt" | "laufend" | "offen"
    */
   phasen: [
-    { name: "Projektstart & Idee", status: "erledigt", start: "2026-09-08", ende: "2026-09-19" },
-    { name: "Lastenheft", status: "laufend", start: "2026-09-15", ende: "2026-10-10" },
-    { name: "Pflichtenheft", status: "laufend", start: "2026-09-29", ende: "2026-10-31" },
-    { name: "Umsetzung", status: "offen", start: "2026-11-02", ende: "2027-01-30" },
-    { name: "Test & Abnahme", status: "offen", start: "2027-02-01", ende: "2027-02-27" },
-    { name: "Präsentation", status: "offen", start: "2027-03-02", ende: "2027-03-13" },
+    { name: "Projektstart & Idee", status: "erledigt", start: "2026-09-15", ende: "2026-09-15" },
+    { name: "Lastenheft", status: "laufend", start: "2026-09-22", ende: "2026-09-29" },
+    { name: "Pflichtenheft", status: "laufend", start: "2026-09-22", ende: "2026-09-29" },
+    { name: "Umsetzung", status: "offen", start: "2026-09-15", ende: "2026-11-03" },
+    { name: "Test & Abnahme", status: "offen", start: "2026-11-03", ende: "2026-11-03" },
+    { name: "Präsentation", status: "offen", start: "2026-11-10", ende: "2027-11-10" },
   ] as const,
 };
 
