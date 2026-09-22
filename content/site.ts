@@ -39,7 +39,7 @@ export const projekt = {
     { name: "Projektstart & Idee", status: "erledigt", start: "2026-09-15", ende: "2026-09-15" },
     { name: "Lastenheft", status: "laufend", start: "2026-09-22", ende: "2026-09-29" },
     { name: "Pflichtenheft", status: "laufend", start: "2026-09-22", ende: "2026-09-29" },
-    { name: "Umsetzung", status: "offen", start: "2026-09-15", ende: "2026-11-03" },
+    { name: "Umsetzung", status: "laufend", start: "2026-09-15", ende: "2026-11-03" },
     { name: "Test & Abnahme", status: "offen", start: "2026-11-03", ende: "2026-11-03" },
     { name: "Präsentation", status: "offen", start: "2026-11-10", ende: "2026-11-10" },
   ] as const,
