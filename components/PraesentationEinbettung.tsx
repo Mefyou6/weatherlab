@@ -18,6 +18,8 @@ type Props = {
   url: string;
   istPdf: boolean;
   titel: string;
+  /** Hinweistext, wenn die PPTX-Vorschau lokal nicht funktioniert */
+  nurOnlineHinweis: string;
 };
 
 const RAHMEN = "h-[70vh] min-h-[480px] w-full border-0 bg-surface-alt";
@@ -27,7 +29,12 @@ const nichtsAbonnieren = () => () => {};
 const domainImBrowser = () => window.location.origin;
 const domainBeimBauen = () => "";
 
-export default function PraesentationEinbettung({ url, istPdf, titel }: Props) {
+export default function PraesentationEinbettung({
+  url,
+  istPdf,
+  titel,
+  nurOnlineHinweis,
+}: Props) {
   const origin = useSyncExternalStore(nichtsAbonnieren, domainImBrowser, domainBeimBauen);
 
   if (istPdf) {
@@ -42,10 +49,7 @@ export default function PraesentationEinbettung({ url, istPdf, titel }: Props) {
   if (origin.includes("localhost") || origin.includes("127.0.0.1")) {
     return (
       <div className="flex h-[70vh] min-h-[480px] items-center justify-center bg-surface-alt px-6 text-center">
-        <p className="max-w-md text-sm text-ink-soft">
-          Die PowerPoint-Vorschau funktioniert nur auf der veröffentlichten Website, weil
-          Microsoft die Datei dafür herunterladen muss. Lokal bitte die Datei herunterladen.
-        </p>
+        <p className="max-w-md text-sm text-ink-soft">{nurOnlineHinweis}</p>
       </div>
     );
   }

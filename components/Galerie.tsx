@@ -3,8 +3,16 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { PublicFile } from "@/lib/files";
+import { t, type Sprache } from "@/content/sprachen";
+import { ui } from "@/content/texte";
 
-export default function Galerie({ bilder }: { bilder: PublicFile[] }) {
+export default function Galerie({
+  bilder,
+  sprache,
+}: {
+  bilder: PublicFile[];
+  sprache: Sprache;
+}) {
   const [aktiv, setAktiv] = useState<number | null>(null);
 
   // Tastatursteuerung für die Lightbox
@@ -53,7 +61,7 @@ export default function Galerie({ bilder }: { bilder: PublicFile[] }) {
         >
           <button
             type="button"
-            aria-label="Schließen"
+            aria-label={t(ui.fotos.schliessen, sprache)}
             className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
             onClick={() => setAktiv(null)}
           >
@@ -66,7 +74,7 @@ export default function Galerie({ bilder }: { bilder: PublicFile[] }) {
             <>
               <button
                 type="button"
-                aria-label="Vorheriges Bild"
+                aria-label={t(ui.fotos.vorheriges, sprache)}
                 className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white hover:bg-white/20"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -77,7 +85,7 @@ export default function Galerie({ bilder }: { bilder: PublicFile[] }) {
               </button>
               <button
                 type="button"
-                aria-label="Nächstes Bild"
+                aria-label={t(ui.fotos.naechstes, sprache)}
                 className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white hover:bg-white/20"
                 onClick={(e) => {
                   e.stopPropagation();

@@ -1,26 +1,25 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import PageHeader from "@/components/PageHeader";
 import { team } from "@/content/team";
-
-export const metadata: Metadata = { title: "Team" };
+import { ui } from "@/content/texte";
+import { t, type Sprache } from "@/content/sprachen";
 
 function initialen(name: string) {
   return name
     .split(" ")
-    .map((t) => t[0])
+    .map((teil) => teil[0])
     .join("")
     .slice(0, 2)
     .toUpperCase();
 }
 
-export default function TeamPage() {
+export default function TeamSeite({ sprache }: { sprache: Sprache }) {
   return (
     <>
       <PageHeader
-        kicker="Wer wir sind"
-        ueberschrift="Unser Team"
-        untertitel="Fünf Personen, klare Rollen. So teilen wir uns die Arbeit im Projekt auf."
+        kicker={t(ui.team.kicker, sprache)}
+        ueberschrift={t(ui.team.titel, sprache)}
+        untertitel={t(ui.team.untertitel, sprache)}
       />
 
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
@@ -33,7 +32,7 @@ export default function TeamPage() {
               {m.foto ? (
                 <Image
                   src={m.foto}
-                  alt={`Foto von ${m.name}`}
+                  alt={`${t(ui.team.fotoVon, sprache)} ${m.name}`}
                   width={288}
                   height={288}
                   sizes="144px"
@@ -48,9 +47,11 @@ export default function TeamPage() {
 
               <h2 className="mt-5 text-lg font-semibold text-ink">{m.name}</h2>
               <p className="mt-1.5 inline-block rounded-full bg-brand-soft px-3 py-1 text-xs font-medium text-brand">
-                {m.rolle}
+                {t(m.rolle, sprache)}
               </p>
-              <p className="mt-4 text-sm leading-relaxed text-ink-soft">{m.beschreibung}</p>
+              <p className="mt-4 text-sm leading-relaxed text-ink-soft">
+                {t(m.beschreibung, sprache)}
+              </p>
             </article>
           ))}
         </div>
@@ -58,14 +59,14 @@ export default function TeamPage() {
 
       <section className="border-t border-line bg-surface-alt">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-          <h2 className="text-2xl font-semibold tracking-tight text-ink">Organigramm</h2>
-          <p className="mt-2 max-w-2xl text-ink-soft">
-            Die Projektstruktur auf einen Blick.
-          </p>
+          <h2 className="text-2xl font-semibold tracking-tight text-ink">
+            {t(ui.team.organigramm, sprache)}
+          </h2>
+          <p className="mt-2 max-w-2xl text-ink-soft">{t(ui.team.organigrammText, sprache)}</p>
           <div className="mt-8 overflow-hidden rounded-xl border border-line bg-surface p-4 sm:p-8">
             <Image
               src="/organigramm.png"
-              alt="Organigramm des WeatherLab-Teams"
+              alt={t(ui.team.organigrammAlt, sprache)}
               width={800}
               height={960}
               className="mx-auto h-auto w-full max-w-2xl"

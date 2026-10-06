@@ -1,29 +1,28 @@
-import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
 import LeerZustand from "@/components/LeerZustand";
 import { DOKUMENT_ENDUNGEN, listPublicFiles } from "@/lib/files";
-
-export const metadata: Metadata = { title: "Dokumente" };
+import { ui } from "@/content/texte";
+import { t, type Sprache } from "@/content/sprachen";
 
 // PDFs (und Textdateien) kann der Browser direkt anzeigen – Office-Dateien nur herunterladen.
 const IM_BROWSER_ANZEIGBAR = new Set(["PDF", "TXT", "MD"]);
 
-export default function DokumentePage() {
+export default function DokumenteSeite({ sprache }: { sprache: Sprache }) {
   const dokumente = listPublicFiles("dokumente", DOKUMENT_ENDUNGEN);
 
   return (
     <>
       <PageHeader
-        kicker="Projektdokumentation"
-        ueberschrift="Dokumente"
-        untertitel="Lastenheft, Pflichtenheft, Protokolle und weitere Unterlagen – zum Ansehen oder Herunterladen."
+        kicker={t(ui.dokumente.kicker, sprache)}
+        ueberschrift={t(ui.dokumente.titel, sprache)}
+        untertitel={t(ui.dokumente.untertitel, sprache)}
       />
 
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         {dokumente.length === 0 ? (
           <LeerZustand
-            titel="Noch keine Dokumente vorhanden"
-            text="Lege Dateien (z. B. Lastenheft.pdf, Pflichtenheft.pdf) im Ordner public/dokumente ab und pushe die Änderung – sie erscheinen dann automatisch hier."
+            titel={t(ui.dokumente.leerTitel, sprache)}
+            text={t(ui.dokumente.leerText, sprache)}
           />
         ) : (
           <ul className="divide-y divide-line overflow-hidden rounded-xl border border-line bg-surface">
@@ -54,7 +53,7 @@ export default function DokumentePage() {
                         rel="noopener noreferrer"
                         className="rounded-md border border-line px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-surface-alt"
                       >
-                        Ansehen
+                        {t(ui.dokumente.ansehen, sprache)}
                       </a>
                     )}
                     <a
@@ -62,7 +61,7 @@ export default function DokumentePage() {
                       download={d.dateiname}
                       className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-dark"
                     >
-                      Download
+                      {t(ui.dokumente.herunterladen, sprache)}
                     </a>
                   </div>
                 </li>

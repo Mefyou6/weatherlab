@@ -1,5 +1,8 @@
 "use client";
 
+import { t, type Sprache } from "@/content/sprachen";
+import { ui } from "@/content/texte";
+
 /**
  * Schaltet zwischen hellem und dunklem Design um.
  *
@@ -11,7 +14,7 @@
 
 const SPEICHER_SCHLUESSEL = "weatherlab.theme";
 
-export default function ThemeUmschalter() {
+export default function ThemeUmschalter({ sprache }: { sprache: Sprache }) {
   function umschalten() {
     const wurzel = document.documentElement;
     const neu = wurzel.getAttribute("data-theme") === "dunkel" ? "hell" : "dunkel";
@@ -27,8 +30,8 @@ export default function ThemeUmschalter() {
     <button
       type="button"
       onClick={umschalten}
-      title="Helles / dunkles Design"
-      aria-label="Zwischen hellem und dunklem Design wechseln"
+      title={t(ui.design.titel, sprache)}
+      aria-label={t(ui.design.beschriftung, sprache)}
       className="rounded-md p-2 text-ink-soft transition-colors hover:bg-surface-alt hover:text-ink"
     >
       {/* Mond – sichtbar im hellen Design */}

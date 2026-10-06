@@ -2,9 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { projekt } from "@/content/site";
 import { team } from "@/content/team";
+import { ui } from "@/content/texte";
+import { pfad, t, type Sprache } from "@/content/sprachen";
 import Zeitplan from "@/components/Zeitplan";
 
-export default function Home() {
+export default function Startseite({ sprache }: { sprache: Sprache }) {
   return (
     <>
       {/* Hero */}
@@ -17,27 +19,27 @@ export default function Home() {
         <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-20 sm:px-6 md:grid-cols-2 md:items-center md:py-28">
           <div>
             <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand">
-              {projekt.schule} · {projekt.fach}
+              {t(projekt.schule, sprache)} · {t(projekt.fach, sprache)}
             </p>
             <h1 className="text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
               {projekt.name}
             </h1>
-            <p className="mt-3 text-xl text-ink-soft">{projekt.claim}</p>
+            <p className="mt-3 text-xl text-ink-soft">{t(projekt.claim, sprache)}</p>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-soft">
-              {projekt.kurzbeschreibung}
+              {t(projekt.kurzbeschreibung, sprache)}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                href="/dokumente"
+                href={pfad("/dokumente", sprache)}
                 className="rounded-md bg-brand px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-brand-dark"
               >
-                Dokumente ansehen
+                {t(ui.start.dokumenteAnsehen, sprache)}
               </Link>
               <Link
-                href="/team"
+                href={pfad("/team", sprache)}
                 className="rounded-md border border-line bg-surface px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface-alt"
               >
-                Das Team
+                {t(ui.start.dasTeam, sprache)}
               </Link>
             </div>
           </div>
@@ -68,35 +70,33 @@ export default function Home() {
       {/* Kennzahlen */}
       <section className="border-b border-line bg-surface-alt">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 py-10 sm:px-6 md:grid-cols-4">
-          <Stat wert={String(team.length)} label="Teammitglieder" />
-          <Stat wert={String(projekt.phasen.length)} label="Projektphasen" />
+          <Stat wert={String(team.length)} label={t(ui.start.teammitglieder, sprache)} />
+          <Stat wert={String(projekt.phasen.length)} label={t(ui.start.projektphasen, sprache)} />
           <Stat
             wert={String(projekt.phasen.filter((p) => p.status === "erledigt").length)}
-            label="Phasen abgeschlossen"
+            label={t(ui.start.phasenFertig, sprache)}
           />
-          <Stat wert={projekt.schuljahr} label="Schuljahr" />
+          <Stat wert={projekt.schuljahr} label={t(ui.start.schuljahr, sprache)} />
         </div>
       </section>
 
       {/* Ziele */}
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-          Worum geht es?
+          {t(ui.start.worumGehtEs, sprache)}
         </h2>
-        <p className="mt-2 max-w-2xl text-ink-soft">
-          Die drei Kernziele unseres Projekts.
-        </p>
+        <p className="mt-2 max-w-2xl text-ink-soft">{t(ui.start.kernziele, sprache)}</p>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {projekt.ziele.map((z, i) => (
             <div
-              key={z.titel}
+              key={z.titel.en}
               className="rounded-xl border border-line bg-surface p-6 transition-shadow hover:shadow-md"
             >
               <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-brand-soft font-mono text-sm font-semibold text-brand">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <h3 className="mt-4 text-lg font-semibold text-ink">{z.titel}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-soft">{z.text}</p>
+              <h3 className="mt-4 text-lg font-semibold text-ink">{t(z.titel, sprache)}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-soft">{t(z.text, sprache)}</p>
             </div>
           ))}
         </div>
@@ -106,13 +106,11 @@ export default function Home() {
       <section className="border-y border-line bg-surface-alt">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
           <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            Zeitplan
+            {t(ui.start.zeitplan, sprache)}
           </h2>
-          <p className="mt-2 max-w-2xl text-ink-soft">
-            Wo wir gerade stehen – von der Idee bis zur Präsentation.
-          </p>
+          <p className="mt-2 max-w-2xl text-ink-soft">{t(ui.start.zeitplanText, sprache)}</p>
           <div className="mt-10 rounded-xl border border-line bg-surface p-5 sm:p-8">
-            <Zeitplan />
+            <Zeitplan sprache={sprache} />
           </div>
         </div>
       </section>
@@ -121,14 +119,14 @@ export default function Home() {
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <div className="grid gap-6 md:grid-cols-2">
           <Karte
-            href="/fotos"
-            titel="Fotos vom Projekt"
-            text="Eindrücke aus der Planung, Entwicklung und den Teammeetings."
+            href={pfad("/fotos", sprache)}
+            titel={t(ui.start.karteFotos, sprache)}
+            text={t(ui.start.karteFotosText, sprache)}
           />
           <Karte
-            href="/arbeitszeit"
-            titel="Arbeitszeitdokumentation"
-            text="Unsere Arbeitsstunden erfassen wir in Projektzeit Pro – direkt hier nutzbar."
+            href={pfad("/arbeitszeit", sprache)}
+            titel={t(ui.start.karteZeit, sprache)}
+            text={t(ui.start.karteZeitText, sprache)}
           />
         </div>
       </section>

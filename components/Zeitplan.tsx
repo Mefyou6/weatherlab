@@ -1,4 +1,6 @@
 import { projekt, type PhasenStatus } from "@/content/site";
+import { MONATE, ui } from "@/content/texte";
+import { t, type Sprache } from "@/content/sprachen";
 import HeuteMarkierung from "@/components/HeuteMarkierung";
 
 /**
@@ -8,26 +10,23 @@ import HeuteMarkierung from "@/components/HeuteMarkierung";
  * das Diagramm jeder Breite an. Daten kommen aus `content/site.ts`.
  */
 
-// Fest verdrahtet statt toLocaleDateString: sonst hängt die Beschriftung davon ab,
-// welche Sprache auf dem Rechner eingestellt ist, der die Website baut.
-const MONATSNAMEN = [
-  "Jän", "Feb", "Mär", "Apr", "Mai", "Jun",
-  "Jul", "Aug", "Sep", "Okt", "Nov", "Dez",
-];
-
 const TAG_IN_MS = 24 * 60 * 60 * 1000;
 
 function alsDatum(iso: string) {
   return new Date(`${iso}T00:00:00Z`);
 }
 
-function formatDatum(iso: string) {
+function formatDatum(iso: string, sprache: Sprache) {
   const d = alsDatum(iso);
-  return `${d.getUTCDate()}. ${MONATSNAMEN[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+  const monat = MONATE[sprache][d.getUTCMonth()];
+  // Englisch: "Sep 8, 2026" – Deutsch: "8. Sep 2026"
+  return sprache === "en"
+    ? `${monat} ${d.getUTCDate()}, ${d.getUTCFullYear()}`
+    : `${d.getUTCDate()}. ${monat} ${d.getUTCFullYear()}`;
 }
 
-const balkenStil: Record<PhasenStatus, { klasse: string; stil?: React.CSSProperties; label: string }> = {
-  erledigt: { klasse: "bg-brand", label: "Erledigt" },
+const balkenStil: Record<PhasenStatus, { klasse: string; stil?: React.CSSProperties }> = {
+  erledigt: { klasse: "bg-brand" },
   laufend: {
     klasse: "bg-brand/85",
     // Schraffur macht "in Arbeit" auch ohne Farbe erkennbar
@@ -35,15 +34,17 @@ const balkenStil: Record<PhasenStatus, { klasse: string; stil?: React.CSSPropert
       backgroundImage:
         "repeating-linear-gradient(45deg, rgba(255,255,255,.3) 0 6px, transparent 6px 12px)",
     },
-    label: "In Arbeit",
   },
-  offen: {
-    klasse: "border border-dashed border-ink-muted/50 bg-surface-alt",
-    label: "Offen",
-  },
+  offen: { klasse: "border border-dashed border-ink-muted/50 bg-surface-alt" },
 };
 
-export default function Zeitplan() {
+const statusLabel: Record<PhasenStatus, (typeof ui.zeitplan)["erledigt"]> = {
+  erledigt: ui.zeitplan.erledigt,
+  laufend: ui.zeitplan.laufend,
+  offen: ui.zeitplan.offen,
+};
+
+export default function Zeitplan({ sprache }: { sprache: Sprache }) {
   const phasen = projekt.phasen;
 
   // Zeitraum des gesamten Diagramms: vom ersten Monatsanfang bis zum letzten Monatsende.
@@ -60,7 +61,7 @@ export default function Zeitplan() {
   const prozent = (d: Date) => ((d.getTime() - von.getTime()) / gesamt) * 100;
 
   // Monatsspalten für Beschriftung und Rasterlinien
-  const monate: { label: string; jahr: number; links: number; breite: number }[] = [];
+  const monate: { label: string; jahr: number; links: number; breite: number; erster: boolean }[] = [];
   for (
     let m = new Date(von);
     m < bis;
@@ -68,10 +69,11 @@ export default function Zeitplan() {
   ) {
     const naechster = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth() + 1, 1));
     monate.push({
-      label: MONATSNAMEN[m.getUTCMonth()],
+      label: MONATE[sprache][m.getUTCMonth()],
       jahr: m.getUTCFullYear(),
       links: prozent(m),
       breite: prozent(naechster) - prozent(m),
+      erster: m.getUTCMonth() === 0,
     });
   }
 
@@ -94,7 +96,7 @@ export default function Zeitplan() {
                   style={{ left: `${m.links}%`, width: `${m.breite}%` }}
                 >
                   {m.label}
-                  {(i === 0 || m.label === "Jän") && (
+                  {(i === 0 || m.erster) && (
                     <span className="ml-1 text-ink-muted/70">{m.jahr}</span>
                   )}
                 </div>
@@ -106,20 +108,20 @@ export default function Zeitplan() {
           <div className="relative">
             {phasen.map((p) => {
               const stil = balkenStil[p.status];
+              const name = t(p.name, sprache);
               const start = alsDatum(p.start);
               // +1 Tag, damit der Endtag im Balken enthalten ist
               const ende = new Date(alsDatum(p.ende).getTime() + TAG_IN_MS);
               const links = prozent(start);
               const breite = prozent(ende) - links;
               const tage = Math.round((ende.getTime() - start.getTime()) / TAG_IN_MS);
+              const zeitraum = `${formatDatum(p.start, sprache)} – ${formatDatum(p.ende, sprache)}`;
 
               return (
-                <div key={p.name} className="flex items-center border-t border-line">
+                <div key={name} className="flex items-center border-t border-line">
                   <div className="w-44 shrink-0 py-3 pr-4">
-                    <p className="text-sm font-medium text-ink">{p.name}</p>
-                    <p className="mt-0.5 text-[11px] text-ink-muted">
-                      {formatDatum(p.start)} – {formatDatum(p.ende)}
-                    </p>
+                    <p className="text-sm font-medium text-ink">{name}</p>
+                    <p className="mt-0.5 text-[11px] text-ink-muted">{zeitraum}</p>
                   </div>
 
                   <div className="relative h-14 flex-1">
@@ -134,7 +136,7 @@ export default function Zeitplan() {
                     ))}
 
                     <div
-                      title={`${p.name}: ${formatDatum(p.start)} – ${formatDatum(p.ende)} (${tage} Tage)`}
+                      title={`${name}: ${zeitraum} (${tage} ${t(ui.zeitplan.tage, sprache)})`}
                       className={`absolute top-1/2 h-7 -translate-y-1/2 rounded-md ${stil.klasse}`}
                       style={{ left: `${links}%`, width: `${breite}%`, ...stil.stil }}
                     />
@@ -162,12 +164,12 @@ export default function Zeitplan() {
               className={`h-3 w-6 rounded ${balkenStil[s].klasse}`}
               style={balkenStil[s].stil}
             />
-            {balkenStil[s].label}
+            {t(statusLabel[s], sprache)}
           </span>
         ))}
         <span className="flex items-center gap-2">
           <span className="h-3 w-px bg-brand" />
-          Heute
+          {t(ui.zeitplan.heute, sprache)}
         </span>
       </div>
     </div>

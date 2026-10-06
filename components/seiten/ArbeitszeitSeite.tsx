@@ -1,16 +1,15 @@
-import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
 import { arbeitszeitApp } from "@/content/site";
+import { ui } from "@/content/texte";
+import { t, type Sprache } from "@/content/sprachen";
 
-export const metadata: Metadata = { title: "Arbeitszeitdokumentation" };
-
-export default function ArbeitszeitPage() {
+export default function ArbeitszeitSeite({ sprache }: { sprache: Sprache }) {
   return (
     <>
       <PageHeader
-        kicker="Zeiterfassung"
-        ueberschrift="Arbeitszeitdokumentation"
-        untertitel={arbeitszeitApp.beschreibung}
+        kicker={t(ui.arbeitszeit.kicker, sprache)}
+        ueberschrift={t(ui.arbeitszeit.titel, sprache)}
+        untertitel={t(arbeitszeitApp.beschreibung, sprache)}
       />
 
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
@@ -18,10 +17,7 @@ export default function ArbeitszeitPage() {
         <div className="flex flex-col gap-4 rounded-xl border border-line bg-surface-alt p-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="font-medium text-ink">{arbeitszeitApp.name}</p>
-            <p className="mt-1 text-sm text-ink-soft">
-              Unten direkt nutzbar. Falls die Anmeldung im eingebetteten Fenster nicht
-              funktioniert, die App in einem eigenen Tab öffnen.
-            </p>
+            <p className="mt-1 text-sm text-ink-soft">{t(ui.arbeitszeit.hinweis, sprache)}</p>
           </div>
           <a
             href={arbeitszeitApp.url}
@@ -29,7 +25,7 @@ export default function ArbeitszeitPage() {
             rel="noopener noreferrer"
             className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-brand px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-dark"
           >
-            In neuem Tab öffnen
+            {t(ui.arbeitszeit.neuerTab, sprache)}
             <svg
               width="16"
               height="16"
@@ -52,14 +48,14 @@ export default function ArbeitszeitPage() {
         <div className="mt-6 overflow-hidden rounded-xl border border-line bg-invert shadow-sm">
           <iframe
             src={arbeitszeitApp.url}
-            title={`${arbeitszeitApp.name} – Arbeitszeitdokumentation`}
+            title={`${arbeitszeitApp.name} – ${t(ui.arbeitszeit.titel, sprache)}`}
             className="h-[720px] w-full border-0 lg:h-[820px]"
             allow="clipboard-write"
           />
         </div>
 
         <p className="mt-3 text-xs text-ink-muted">
-          Eingebettet von{" "}
+          {t(ui.arbeitszeit.eingebettetVon, sprache)}{" "}
           <a
             href={arbeitszeitApp.url}
             target="_blank"

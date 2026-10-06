@@ -1,33 +1,31 @@
-import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
 import LeerZustand from "@/components/LeerZustand";
 import PraesentationEinbettung from "@/components/PraesentationEinbettung";
 import { listPublicFiles } from "@/lib/files";
-
-export const metadata: Metadata = { title: "Präsentation" };
+import { ui } from "@/content/texte";
+import { t, type Sprache } from "@/content/sprachen";
 
 const PRAESENTATION_ENDUNGEN = [".pdf", ".pptx", ".ppt"] as const;
 
-export default function PraesentationPage() {
+export default function PraesentationSeite({ sprache }: { sprache: Sprache }) {
   const dateien = listPublicFiles("praesentation", PRAESENTATION_ENDUNGEN);
 
   // PDF wird für die Anzeige bevorzugt – die läuft in jedem Browser ohne Umweg.
   const anzeige = dateien.find((d) => d.endung === "PDF") ?? dateien[0];
-  const downloads = dateien;
 
   return (
     <>
       <PageHeader
-        kicker="Projektabschluss"
-        ueberschrift="Präsentation"
-        untertitel="Unsere Projektpräsentation – direkt hier durchblättern oder herunterladen."
+        kicker={t(ui.praesentation.kicker, sprache)}
+        ueberschrift={t(ui.praesentation.titel, sprache)}
+        untertitel={t(ui.praesentation.untertitel, sprache)}
       />
 
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         {!anzeige ? (
           <LeerZustand
-            titel="Die Präsentation ist noch in Arbeit"
-            text="Sobald sie fertig ist, kommt sie als PDF (empfohlen) oder PPTX in den Ordner public/praesentation und erscheint automatisch hier."
+            titel={t(ui.praesentation.leerTitel, sprache)}
+            text={t(ui.praesentation.leerText, sprache)}
           />
         ) : (
           <>
@@ -35,11 +33,11 @@ export default function PraesentationPage() {
               <div>
                 <p className="font-medium text-ink">{anzeige.titel}</p>
                 <p className="mt-1 text-sm text-ink-soft">
-                  Im Fenster unten durchblättern – oder als Datei herunterladen.
+                  {t(ui.praesentation.hinweis, sprache)}
                 </p>
               </div>
               <div className="flex shrink-0 flex-wrap gap-2">
-                {downloads.map((d) => (
+                {dateien.map((d) => (
                   <a
                     key={d.url}
                     href={d.url}
@@ -56,7 +54,8 @@ export default function PraesentationPage() {
               <PraesentationEinbettung
                 url={anzeige.url}
                 istPdf={anzeige.endung === "PDF"}
-                titel={`Präsentation: ${anzeige.titel}`}
+                titel={`${t(ui.praesentation.titel, sprache)}: ${anzeige.titel}`}
+                nurOnlineHinweis={t(ui.praesentation.nurOnline, sprache)}
               />
             </div>
           </>
