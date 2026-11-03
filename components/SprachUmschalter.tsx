@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { pfad, t, type Sprache } from "@/content/sprachen";
 import { ui } from "@/content/texte";
@@ -8,9 +7,10 @@ import { ui } from "@/content/texte";
 /**
  * Wechselt zwischen Englisch (unter "/") und Deutsch (unter "/de").
  *
- * Der Umschalter führt auf dieselbe Seite in der anderen Sprache:
- * "/team" <-> "/de/team". Die Sprache steht damit in der Adresse und
- * lässt sich auch verschicken – anders als eine Einstellung im Browser.
+ * Bewusst ein normales <a> statt next/link: so lädt der Browser die Seite
+ * komplett neu. Nur dann läuft das Skript im deutschen Layout wieder, das
+ * <html lang> umstellt. Bei einem Wechsel ohne Neuladen bliebe die alte
+ * Sprachkennzeichnung stehen.
  */
 
 export default function SprachUmschalter({ sprache }: { sprache: Sprache }) {
@@ -22,7 +22,7 @@ export default function SprachUmschalter({ sprache }: { sprache: Sprache }) {
     sprache === "de" ? pathname.replace(/^\/de(?=\/|$)/, "") || "/" : pathname;
 
   return (
-    <Link
+    <a
       href={pfad(ohnePraefix, andere)}
       hrefLang={andere}
       title={t(ui.sprache.beschreibung, sprache)}
@@ -30,6 +30,6 @@ export default function SprachUmschalter({ sprache }: { sprache: Sprache }) {
       className="rounded-md border border-line px-2 py-1 text-xs font-semibold tracking-wide text-ink-soft transition-colors hover:border-brand hover:text-brand"
     >
       {t(ui.sprache.wechselZu, sprache)}
-    </Link>
+    </a>
   );
 }

@@ -159,11 +159,14 @@ export const ui = {
     kicker: { en: "Time tracking", de: "Zeiterfassung" },
     titel: { en: "Working time documentation", de: "Arbeitszeitdokumentation" },
     hinweis: {
-      en: "Usable directly below. If signing in does not work inside the embedded window, open the app in its own tab.",
-      de: "Unten direkt nutzbar. Falls die Anmeldung im eingebetteten Fenster nicht funktioniert, die App in einem eigenen Tab öffnen.",
+      en: "Projektzeit Pro does not allow other websites to embed it, so it opens in its own tab.",
+      de: "Projektzeit Pro erlaubt keine Einbettung in andere Websites und öffnet sich deshalb in einem eigenen Tab.",
     },
-    neuerTab: { en: "Open in a new tab", de: "In neuem Tab öffnen" },
-    eingebettetVon: { en: "Embedded from", de: "Eingebettet von" },
+    neuerTab: { en: "Open Projektzeit Pro", de: "Projektzeit Pro öffnen" },
+    loginHinweis: {
+      en: "A login is required. Ask a team member if you do not have access yet.",
+      de: "Für die Nutzung ist ein Login nötig. Falls du noch keinen Zugang hast, melde dich im Team.",
+    },
   },
 } satisfies Record<string, Record<string, Text>>;
 

@@ -3,6 +3,15 @@ import { arbeitszeitApp } from "@/content/site";
 import { ui } from "@/content/texte";
 import { t, type Sprache } from "@/content/sprachen";
 
+/**
+ * Verweist auf die externe Zeiterfassung.
+ *
+ * Eingebettet war sie früher per <iframe>. Projektzeit Pro sendet inzwischen
+ * "X-Frame-Options: DENY" und "frame-ancestors 'none'" – damit verbietet die
+ * App jede Einbettung und der Rahmen bliebe leer ("Verbindung abgelehnt").
+ * Deshalb hier ein deutlicher Verweis statt eines kaputten Fensters.
+ */
+
 export default function ArbeitszeitSeite({ sprache }: { sprache: Sprache }) {
   return (
     <>
@@ -12,18 +21,35 @@ export default function ArbeitszeitSeite({ sprache }: { sprache: Sprache }) {
         untertitel={t(arbeitszeitApp.beschreibung, sprache)}
       />
 
-      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        {/* Hinweis + Direktlink */}
-        <div className="flex flex-col gap-4 rounded-xl border border-line bg-surface-alt p-6 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="font-medium text-ink">{arbeitszeitApp.name}</p>
-            <p className="mt-1 text-sm text-ink-soft">{t(ui.arbeitszeit.hinweis, sprache)}</p>
-          </div>
+      <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
+        <div className="rounded-2xl border border-line bg-surface-alt p-8 text-center sm:p-12">
+          <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-soft text-brand">
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 7v5l3 2" />
+            </svg>
+          </span>
+
+          <h2 className="mt-5 text-xl font-semibold text-ink">{arbeitszeitApp.name}</h2>
+          <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-ink-soft">
+            {t(ui.arbeitszeit.hinweis, sprache)}
+          </p>
+
           <a
             href={arbeitszeitApp.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-brand px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-dark"
+            className="mt-7 inline-flex items-center justify-center gap-2 rounded-md bg-brand px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-dark"
           >
             {t(ui.arbeitszeit.neuerTab, sprache)}
             <svg
@@ -42,29 +68,12 @@ export default function ArbeitszeitSeite({ sprache }: { sprache: Sprache }) {
               <path d="M10 14 21 3" />
             </svg>
           </a>
-        </div>
 
-        {/* Eingebettete App */}
-        <div className="mt-6 overflow-hidden rounded-xl border border-line bg-invert shadow-sm">
-          <iframe
-            src={arbeitszeitApp.url}
-            title={`${arbeitszeitApp.name} – ${t(ui.arbeitszeit.titel, sprache)}`}
-            className="h-[720px] w-full border-0 lg:h-[820px]"
-            allow="clipboard-write"
-          />
+          <p className="mt-4 font-mono text-xs text-ink-muted">projektzeit-pro.vercel.app</p>
+          <p className="mx-auto mt-6 max-w-sm text-xs leading-relaxed text-ink-muted">
+            {t(ui.arbeitszeit.loginHinweis, sprache)}
+          </p>
         </div>
-
-        <p className="mt-3 text-xs text-ink-muted">
-          {t(ui.arbeitszeit.eingebettetVon, sprache)}{" "}
-          <a
-            href={arbeitszeitApp.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline underline-offset-2 hover:text-brand"
-          >
-            projektzeit-pro.vercel.app
-          </a>
-        </p>
       </section>
     </>
   );
